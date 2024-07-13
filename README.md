@@ -1,2 +1,1 @@
-# reactjs-refresher
-This repository will contain all the branch of react js refresher
+All the project during the practise will go to the branches of this repo
