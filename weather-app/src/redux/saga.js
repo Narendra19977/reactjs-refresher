@@ -3,9 +3,9 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import { FETCH_WEATHER_REQUEST, fetchWeatherSuccess, fetchWeatherFailure } from './actions/fetchAction';
 
-const API_KEY = '8a8f7b0ee612be45d906b30899770be4';
+const apiKey=process.env.REACT_APP_API_KEY
 const fetchWeatherApi = (city) =>
-  axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`);
+  axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`);
 
 function* fetchWeather(action) {
   try {

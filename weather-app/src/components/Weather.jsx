@@ -1,5 +1,5 @@
 // src/components/Weather.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWeatherRequest } from '../redux/actions/fetchAction';
 
@@ -13,6 +13,9 @@ const Weather = () => {
   const handleFetchWeather = () => {
     dispatch(fetchWeatherRequest(city));
   };
+  
+  useEffect(()=>{console.log(weatherData.weather[0])},[weatherData])
+  // console.log(weatherData.weather)
 
   return (
     <div>
@@ -29,6 +32,7 @@ const Weather = () => {
         <div>
           <h2>{weatherData.name}</h2>
           <p>Temperature: {(weatherData.main.temp - 273.15).toFixed(2)}°C</p>
+          <img src={weatherData.weather[0].icon.toString()} alt={weatherData.weather[0].description}/>
           <p>Weather: {weatherData.weather[0].description}</p>
         </div>
       )}
