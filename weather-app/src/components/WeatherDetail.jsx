@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 
 function WeatherDetail({weatherData}) {
+     const rootImageURL = "http://openweathermap.org/img/w/"
   return (
     <Fragment>
     <h2>{weatherData.name}</h2>

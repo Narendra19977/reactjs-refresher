@@ -15,7 +15,6 @@ const Weather = () => {
     e.preventDefault()
     dispatch(fetchWeatherRequest(city));
   };
-  const rootImageURL = "http://openweathermap.org/img/w/"
 
   return (
     <div>
