@@ -10,7 +10,8 @@ const Weather = () => {
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
 
-  const handleFetchWeather = () => {
+  const handleFetchWeather = (e) => {
+    e.preventDefault()
     dispatch(fetchWeatherRequest(city));
   };
 
@@ -21,15 +22,16 @@ const Weather = () => {
   return (
     <div>
       <h1>Weather App</h1>
+      <form onSubmit={handleFetchWeather}>
       <input
         type="text"
         value={city}
         onChange={(e) => setCity(e.target.value)}
         placeholder="Enter city"
       />
-      <button onClick={handleFetchWeather}>Fetch Weather</button>
+      <button type='submit'>Fetch Weather</button>
       {loading && <p>Loading...</p>}
-      {weatherData && (
+      {(!loading && weatherData) ? (
         <div>
           <h2>{weatherData.name}</h2>
           <p>Temperature: {(weatherData.main.temp - 273.15).toFixed(2)}°C</p>
@@ -43,8 +45,10 @@ const Weather = () => {
                    )
           })}
         </div>
-      )}
+      ):"data is not present"}
       {error && <p>Error: {error}</p>}
+      </form>
+
     </div>
   );
 };
