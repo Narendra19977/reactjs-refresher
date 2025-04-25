@@ -1,7 +1,8 @@
-// src/components/Weather.js
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWeatherRequest } from '../redux/actions/fetchAction';
+import WeatherForm from './WeatherForm';
+import WeatherDetail from './WeatherDetail';
 
 const Weather = () => {
   const [city, setCity] = useState('');
@@ -14,41 +15,17 @@ const Weather = () => {
     e.preventDefault()
     dispatch(fetchWeatherRequest(city));
   };
-
-  useEffect(() => { console.log(weatherData?.weather) }, [weatherData])
-  // console.log(weatherData.weather)
-  const rootImageURL="http://openweathermap.org/img/w/"
+  const rootImageURL = "http://openweathermap.org/img/w/"
 
   return (
     <div>
       <h1>Weather App</h1>
-      <form onSubmit={handleFetchWeather}>
-      <input
-        type="text"
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-        placeholder="Enter city"
-      />
-      <button type='submit'>Fetch Weather</button>
+      <WeatherForm city={city} setCity={setCity} onSubmit={handleFetchWeather} />
       {loading && <p>Loading...</p>}
-      {(!loading && weatherData) ? (
-        <div>
-          <h2>{weatherData.name}</h2>
-          <p>Temperature: {(weatherData.main.temp - 273.15).toFixed(2)}°C</p>
-          
-          {weatherData.weather?.map((weatherInfo,index)=>{
-                   return(
-                    <ul key={index}>
-                      <li><img src={`${rootImageURL}${weatherInfo.icon}.png`} alt={weatherData.weather[0].description} /></li>
-                     <li> <p>Weather: {weatherData.description}</p></li>
-                    </ul>
-                   )
-          })}
-        </div>
-      ):"data is not present"}
+      {(!error && !loading && weatherData) && (
+        <WeatherDetail weatherData={weatherData} />
+      )}
       {error && <p>Error: {error}</p>}
-      </form>
-
     </div>
   );
 };
