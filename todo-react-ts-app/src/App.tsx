@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import TodoForm from "../src/components/TodoForm";
+import TodoList from "../src/components/TodoList";
+import { styles } from "./style/app.style";
+import { TodosProvider, useTodosContext } from "./context/todoContext";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+export interface TodoType {
+  todo: string;
+  id: number;
+}
+interface TodosType {
+  todos: Array<TodoType>;
 }
 
-export default App
+export default function App() {
+  const { todo, setTodo } = useTodosContext();
+  function handleTodo(e: React.ChangeEvent<HTMLInputElement>) {
+    setTodo(e.target.value);
+  }
+
+  return (
+    <div style={styles.appContainer as React.CSSProperties}>
+      <h1 style={styles.appHeaderText}>Todo React App</h1>
+      <TodoForm onChangeTodo={handleTodo} todo={todo} />
+      <TodoList />
+    </div>
+  );
+}
